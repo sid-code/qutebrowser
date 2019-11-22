@@ -115,9 +115,13 @@ class HostBlocker:
 
         qtutils.ensure_valid(request_url)
 
+
         if not config.get('content.host_blocking.enabled',
                           url=first_party_url):
             return False
+
+        if 'midroll' in request_url.path():
+            return True
 
         host = request_url.host()
         return ((host in self._blocked_hosts or
